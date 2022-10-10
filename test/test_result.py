@@ -22,10 +22,14 @@ def test_task_resultview():
 
     print(df)
     
-    
+def test_massql_conversion():
+    import msdata
+
+    msdata.convert_ms_to_feather("test.mzML", "test")
+
 
 def main():
-    test_task_resultview()
+    test_massql_conversion()
 
 
 if __name__ == "__main__": 

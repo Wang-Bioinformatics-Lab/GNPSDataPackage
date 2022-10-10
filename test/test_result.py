@@ -21,7 +21,7 @@ def test_task_resultview():
     assert(len(df) > 0)
 
     print(df)
-    
+
 def test_massql_conversion():
     import msdata
 

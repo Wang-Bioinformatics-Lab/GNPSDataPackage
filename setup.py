@@ -21,7 +21,7 @@ setuptools.setup(
         "License :: OSI Approved :: MIT License",
         "Operating System :: OS Independent",
     ],
-    packages=["massql"],
+    packages=["gnpsdata"],
     install_requires=[
         "massql",
         "bs4",

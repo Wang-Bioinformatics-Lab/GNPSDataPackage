@@ -25,7 +25,7 @@ def test_task_resultview():
 def test_massql_conversion():
     import msdata
 
-    msdata.convert_ms_to_feather("test.mzML", "test")
+    msdata.convert_ms_to_feather("data/DSM_17855_SI-1.mzML")
 
 
 def main():

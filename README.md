@@ -5,3 +5,12 @@ This is a package to make it easier to access GNPS Data from various web resourc
 1. Structure API
 1. MassQL Data Conversions
 1. Listing Datasets from public Datasets
+
+
+## Installation
+
+Use the following command
+
+```
+pip install git+https://github.com/Wang-Bioinformatics-Lab/GNPSDataPackage.git
+```

@@ -1,5 +1,5 @@
 import sys
-sys.path.insert(0, '../src')
+sys.path.insert(0, '../gnpsdata')
 
 def test_massivekb_sptxt():
     task = "82c0124b6053407fa41ba98f53fd8d89"
@@ -27,9 +27,14 @@ def test_massql_conversion():
 
     msdata.convert_ms_to_feather("data/DSM_17855_SI-1.mzML")
 
+def test_classicnetworking_graphml():
+    import workflow_classicnetworking
+
+    workflow_classicnetworking.download_graphml("78a99abcdbe94d69a6d1b392848ed052", "temp.graphml")
 
 def main():
-    test_massql_conversion()
+    #test_massql_conversion()
+    test_classicnetworking_graphml()
 
 
 if __name__ == "__main__": 

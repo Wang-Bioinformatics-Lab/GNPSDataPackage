@@ -2,6 +2,16 @@ import requests
 import os
 import sys
 import pandas as pd
+from urllib.parse import urlparse
+from urllib.parse import parse_qs
+
+def determine_result_file_url_from_viewurl(view_url):
+    parsed_url = urlparse(url)
+    task = parse_qs(parsed_url.query)['task'][0]
+    view = parse_qs(parsed_url.query)['view'][0]
+
+    return determine_resultview_file_url(task, view)
+
 
 def determine_result_file_url(task, result_path):
     url = "https://proteomics2.ucsd.edu/ProteoSAFe/DownloadResultFile?task={}&file={}&block=main".format(task, result_path)

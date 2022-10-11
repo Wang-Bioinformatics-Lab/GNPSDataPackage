@@ -2,3 +2,4 @@ massql
 pandas
 requests
 bs4
+networkx

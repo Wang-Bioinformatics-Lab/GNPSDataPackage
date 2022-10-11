@@ -31,6 +31,8 @@ def test_classicnetworking_graphml():
     import workflow_classicnetworking
 
     workflow_classicnetworking.download_graphml("78a99abcdbe94d69a6d1b392848ed052", "temp.graphml")
+    workflow_classicnetworking.get_graphml_network("78a99abcdbe94d69a6d1b392848ed052")
+    
 
 def main():
     #test_massql_conversion()

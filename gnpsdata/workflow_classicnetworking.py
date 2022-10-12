@@ -12,3 +12,18 @@ def get_graphml_network(task):
     G = nx.read_graphml("temp.graphml")
 
     print(G)
+
+def get_clustersummary_dataframe(task):
+    view_name = "view_all_clusters_withID_beta"
+
+    df = taskresult.download_task_resultview(task, view_name)
+
+    return df
+
+def get_clusterinfo_dataframe(task):
+    view_name = "view_raw_spectra"
+
+    df = taskresult.download_task_resultview(task, view_name)
+
+    return df
+

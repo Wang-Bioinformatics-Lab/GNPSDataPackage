@@ -5,7 +5,7 @@ import pandas as pd
 from urllib.parse import urlparse
 from urllib.parse import parse_qs
 
-def determine_result_file_url_from_viewurl(view_url):
+def determine_resultfile_url_from_viewurl(view_url):
     parsed_url = urlparse(url)
     task = parse_qs(parsed_url.query)['task'][0]
     view = parse_qs(parsed_url.query)['view'][0]
@@ -13,7 +13,7 @@ def determine_result_file_url_from_viewurl(view_url):
     return determine_resultview_file_url(task, view)
 
 
-def determine_result_file_url(task, result_path):
+def determine_resultfile_url(task, result_path):
     url = "https://proteomics2.ucsd.edu/ProteoSAFe/DownloadResultFile?task={}&file={}&block=main".format(task, result_path)
 
     return url
@@ -67,7 +67,7 @@ def determine_resultview_file_url(task, result_view_name):
 
 # This downloads a specific file from a task
 def download_task_resultfile(task, result_path, output_file):
-    url = determine_result_file_url(task, result_path)
+    url = determine_resultfile_url(task, result_path)
 
     with requests.get(url, stream=True) as r:
         r.raise_for_status()
@@ -94,8 +94,8 @@ def download_task_resultview(task, result_view, output_file):
     
     return 
 
-def get_task_result_dataframe(task, result_path):
-    url = determine_result_file_url(task, result_path)
+def get_task_resultfile_dataframe(task, result_path):
+    url = determine_resultfile_url(task, result_path)
 
     df = pd.read_csv(url, sep="\t")
 

@@ -27,3 +27,10 @@ def get_clusterinfo_dataframe(task):
 
     return df
 
+
+def get_librarymatches_dataframe(task):
+    view_name = "view_all_annotations_DB"
+
+    df = taskresult.get_task_resultview_dataframe(task, view_name)
+
+    return df

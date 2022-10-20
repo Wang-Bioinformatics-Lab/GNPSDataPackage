@@ -1,8 +1,9 @@
 from gnpsdata import taskresult
 
 
-def get_unfiltered_pairs_dataframe(task):
-    view_name = "view_results"
+# This gets us the results as a data frame
+def get_results_dataframe(task):
+    view_name = "query_results"
 
     df = taskresult.get_task_resultview_dataframe(task, view_name)
 

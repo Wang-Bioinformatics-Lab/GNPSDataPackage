@@ -10,7 +10,7 @@ def get_results_dataframe(task):
     return df
 
 def get_extractionresults_dataframe(task):
-    view_name = "query_results"
+    view_name = "extract_results"
 
     df = taskresult.get_task_resultview_dataframe(task, view_name)
 

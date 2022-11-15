@@ -30,10 +30,19 @@ def test_massql_conversion():
 def test_classicnetworking_graphml():
     from gnpsdata import workflow_classicnetworking
 
-    workflow_classicnetworking.download_graphml("78a99abcdbe94d69a6d1b392848ed052", "temp.graphml")
-    workflow_classicnetworking.get_graphml_network("78a99abcdbe94d69a6d1b392848ed052")
-    
+    task = "78a99abcdbe94d69a6d1b392848ed052"
 
+    workflow_classicnetworking.download_graphml(task, "temp.graphml")
+    workflow_classicnetworking.get_graphml_network(task)
+
+def test_fbmn_graphml():
+    from gnpsdata import workflow_fbmn
+
+    task = "5f49ed8f3963479995cc48a239cd205d"
+
+    workflow_fbmn.download_graphml(task, "temp.graphml")
+    workflow_fbmn.get_graphml_network(task)
+    
 def main():
     #test_massql_conversion()
     test_classicnetworking_graphml()

@@ -43,9 +43,20 @@ def test_fbmn_graphml():
     workflow_fbmn.download_graphml(task, "temp.graphml")
     workflow_fbmn.get_graphml_network(task)
     
+def test_dashboard():
+    from gnpsdata import dashboard
+
+    url = dashboard.get_dashboard_viewer_linkout("mzspec:MSV000085852:QC_0",
+        xic_mz=None,
+        xic_rt=None,
+        ms2_scan=None)
+    
+    print(url)
+
 def main():
     #test_massql_conversion()
-    test_classicnetworking_graphml()
+    #test_classicnetworking_graphml()
+    test_dashboard()
 
 
 if __name__ == "__main__": 

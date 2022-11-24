@@ -11,6 +11,10 @@ def get_graphml_network(task):
 
     return G
 
+def download_mgf(task, output_file):
+    taskresult.download_task_resultfile(task, "spectra/specs_ms.mgf", output_file)
+
+
 def get_clustersummary_dataframe(task):
     view_name = "view_all_clusters_withID_beta"
 

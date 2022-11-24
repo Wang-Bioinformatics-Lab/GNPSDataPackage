@@ -10,3 +10,6 @@ def get_graphml_network(task):
     G = nx.read_graphml("temp.graphml")
 
     return G
+
+def download_mgf(task, output_file):
+    taskresult.download_task_resultfile(task, "spectra_reformatted/", output_file)

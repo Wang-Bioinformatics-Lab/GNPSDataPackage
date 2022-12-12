@@ -4,7 +4,19 @@ from bs4 import BeautifulSoup
 def get_massive_private_dataset_filelist(accession, username, password):
     url = "https://massive.ucsd.edu/ProteoSAFe/dataset_files.jsp?accession={}".format(accession)
 
-    r = requests.get(url, auth=(username, password))
+    s = requests.Session()
+    payload = {
+        'user' : username,
+        'password' : password,
+        'login' : 'Sign in'
+    }
+
+    base_url = "massive.ucsd.edu"
+
+    r = s.post('https://' + base_url + '/ProteoSAFe/user/login.jsp', data=payload, verify=False)
+    r = s.post('https://' + base_url + '/ProteoSAFe/InvokeTools', data=parameters, verify=False)
+
+    r = s.get(url, auth=(username, password))
 
     if r.status_code != 200:
         raise Exception("Unable to get dataset file list")

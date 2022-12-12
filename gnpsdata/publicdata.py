@@ -19,6 +19,7 @@ def get_massive_private_dataset_filelist(accession, username, password):
     r = s.get(url, auth=(username, password))
 
     if r.status_code != 200:
+        print(r.text)
         raise Exception("Unable to get dataset file list")
 
     r = requests.get(dataset_files_url)

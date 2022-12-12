@@ -16,13 +16,12 @@ def get_massive_private_dataset_filelist(accession, username, password):
     r = s.post('https://' + base_url + '/ProteoSAFe/user/login.jsp', data=payload, verify=False)
     r = s.post('https://' + base_url + '/ProteoSAFe/InvokeTools', data=parameters, verify=False)
 
-    r = s.get(url, auth=(username, password))
+    r = s.get(url)
 
     if r.status_code != 200:
         print(r.text)
         raise Exception("Unable to get dataset file list")
 
-    r = requests.get(dataset_files_url)
     soup = BeautifulSoup(r.text, features="lxml")
     scripts_list = soup.findAll('script')
 

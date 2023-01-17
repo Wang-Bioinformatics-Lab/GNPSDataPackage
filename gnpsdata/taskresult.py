@@ -4,6 +4,7 @@ import sys
 import pandas as pd
 from urllib.parse import urlparse
 from urllib.parse import parse_qs
+from urllib.parse import quote
 
 def determine_resultfile_url_from_viewurl(view_url):
     parsed_url = urlparse(url)
@@ -17,6 +18,8 @@ def determine_resultfile_url(task, result_path):
     url = "https://proteomics2.ucsd.edu/ProteoSAFe/DownloadResultFile?task={}&file={}&block=main".format(task, result_path)
 
     return url
+
+
 
 def determine_resultview_file_url(task, result_view_name):
     # Workflow Type
@@ -107,3 +110,28 @@ def get_task_resultview_dataframe(task, result_view_name):
     df = pd.read_csv(url, sep="\t")
 
     return df
+
+
+# These are for GNPS2
+def download_gnps2_task_resultfile(task, result_path, output_file):
+    url = determine_gnps2_resultfile_url(task, result_path)
+
+    with requests.get(url, stream=True) as r:
+        r.raise_for_status()
+        with open(output_file, 'wb') as f:
+            for chunk in r.iter_content(chunk_size=8192): 
+                # If you have chunk encoded response uncomment if
+                # and set chunk_size parameter to None.
+                #if chunk: 
+                f.write(chunk)
+    
+    return
+
+
+
+def determine_gnps2_resultfile_url(task, result_path):
+    url = "https://gnps2.org/resultfile?task={}&file={}".format(task, quote(result_path))
+
+    return url
+
+

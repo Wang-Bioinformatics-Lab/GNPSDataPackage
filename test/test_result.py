@@ -58,11 +58,22 @@ def test_gnps2_task_result():
 
     taskresult.download_gnps2_task_resultfile("b8e2a2c89f924a5d8bef4ab3c5c90937", "gnps_network/network.graphml", "network.graphml")
 
+def test_public_dataset():
+    from gnpsdata import publicdata
+
+    all_files = publicdata.get_massive_public_dataset_filelist("MSV000086709")
+    
+    print(len(all_files))
+
+    assert(len(all_files) > 15)
+
+
 def main():
     #test_massql_conversion()
     #test_classicnetworking_graphml()
     #test_dashboard()
-    test_gnps2_task_result()
+    #test_gnps2_task_result()
+    test_public_dataset()
 
 
 if __name__ == "__main__": 

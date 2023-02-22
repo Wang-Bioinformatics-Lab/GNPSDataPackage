@@ -13,3 +13,6 @@ def get_graphml_network(task):
 
 def download_mgf(task, output_file):
     taskresult.download_task_resultfile(task, "spectra_reformatted/", output_file)
+
+def download_qiime2(task, output_file):
+    taskresult.download_task_resultfile(task, "qiime2_output/qiime2_table.qza", output_file)

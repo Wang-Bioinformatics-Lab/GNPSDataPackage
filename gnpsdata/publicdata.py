@@ -57,14 +57,15 @@ def get_massive_public_dataset_filelist(accession):
 
     for script in scripts_list:
         if script.string is not None:
-            if len(script.string) > 20000:
-                print("Lets parse this one")
+            if len(script.string) > 500:
+                print("Lets parse this script tag")
                 new_script = script.string.split("var dataset_files = ")[-1]
-                new_script = new_script.split("var tooltip = createTooltip();")[0]
-                new_script = new_script.rstrip()
-                new_script = new_script.rstrip(";")
-                
-                files_dict = json.loads(new_script)
-                files_list = files_dict["row_data"]
+                new_script = new_script.split("};")[0] + "}"
+
+                try:
+                    files_dict = json.loads(new_script)
+                    files_list = files_dict["row_data"]
+                except:
+                    pass
 
     return files_list

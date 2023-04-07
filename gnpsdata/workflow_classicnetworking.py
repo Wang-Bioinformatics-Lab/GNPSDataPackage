@@ -36,3 +36,8 @@ def get_librarymatches_dataframe(task):
     df = taskresult.get_task_resultview_dataframe(task, view_name)
 
     return df
+
+def get_usi_from_cluster(task, clusterindex):
+    usi = "mzspec:GNPS-TASK-" + task + ":scan:" + clusterindex
+
+    return usi

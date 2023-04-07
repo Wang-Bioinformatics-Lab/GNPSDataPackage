@@ -5,7 +5,7 @@ def resolve_usi(usi):
     url = "https://metabolomics-usi.gnps2.org/json/"
 
     params = {}
-    params["usi"] = usi
+    params["usi1"] = usi
 
     r = requests.get(url, params=params)
 

@@ -38,6 +38,6 @@ def get_librarymatches_dataframe(task):
     return df
 
 def get_usi_from_cluster(task, clusterindex):
-    usi = "mzspec:GNPS-TASK-" + task + ":scan:" + clusterindex
+    usi = "mzspec:GNPS:TASK-{}-{}:scan:{}".format(task, "spectra/specs_ms.mgf", clusterindex)
 
     return usi

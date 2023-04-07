@@ -15,4 +15,4 @@ def get_dashboard_viewer_linkout(usi,
         params["ms2_identifier"] = "MS2:" + str(ms2_scan)
     
 
-    return "https://gnps-lcms.ucsd.edu/?{}".format(urllib.parse.urlencode(params))
+    return "https://dashboard.gnps2.org/?{}".format(urllib.parse.urlencode(params))

@@ -19,8 +19,6 @@ def determine_resultfile_url(task, result_path):
 
     return url
 
-
-
 def determine_resultview_file_url(task, result_view_name):
     # Workflow Type
     status_url = "https://gnps.ucsd.edu/ProteoSAFe/QueryTaskDetails?task={}".format(task)

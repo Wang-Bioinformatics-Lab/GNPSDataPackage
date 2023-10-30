@@ -125,7 +125,12 @@ def download_gnps2_task_resultfile(task, result_path, output_file):
     
     return
 
+def get_gnps2_task_resultfile_dataframe(task, result_path, output_file):
+    url = determine_gnps2_resultfile_url(task, result_path)
 
+    df = pd.read_csv(url, sep="\t")
+
+    return df
 
 def determine_gnps2_resultfile_url(task, result_path):
     url = "https://gnps2.org/resultfile?task={}&file={}".format(task, quote(result_path))

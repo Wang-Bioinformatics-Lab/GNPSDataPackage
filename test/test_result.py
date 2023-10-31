@@ -7,7 +7,7 @@ def test_massivekb_sptxt():
 
     from gnpsdata import taskresult
 
-    taskresult.download_task_resultfile(task, result_path, "test.txt")
+    taskresult.download_task_resultfile(task, result_path, "test.txt", gnps2=False)
 
 def test_task_resultview():
     task = "471e71b94f6945ae8a007b0f7b0dbc4e"
@@ -32,7 +32,7 @@ def test_classicnetworking_graphml():
 
     task = "78a99abcdbe94d69a6d1b392848ed052"
 
-    workflow_classicnetworking.download_graphml(task, "temp.graphml")
+    workflow_classicnetworking.download_graphml(task, "temp.graphml", gnps2=False)
     workflow_classicnetworking.get_graphml_network(task)
 
 def test_fbmn_graphml():
@@ -40,7 +40,7 @@ def test_fbmn_graphml():
 
     task = "5f49ed8f3963479995cc48a239cd205d"
 
-    workflow_fbmn.download_graphml(task, "temp.graphml")
+    workflow_fbmn.download_graphml(task, "temp.graphml", gnps2=False)
     workflow_fbmn.get_graphml_network(task)
     
 def test_dashboard():

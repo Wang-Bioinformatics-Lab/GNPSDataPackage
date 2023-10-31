@@ -53,6 +53,7 @@ def test_dashboard():
     
     print(url)
 
+# These are the GNPS2 tests
 def test_gnps2_task_result():
     from gnpsdata import taskresult
 

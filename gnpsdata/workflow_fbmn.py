@@ -31,7 +31,7 @@ def download_quantification(task, output_file, gnps2=True):
 
 def get_metadata_dataframe(task, gnps2=True):
     if gnps2:
-        taskresult.get_gnps2_task_resultfile_dataframe(task, "nf_output/clustering/merged_metadata.tsv")
+        taskresult.get_gnps2_task_resultfile_dataframe(task, "nf_output/metadata/merged_metadata.tsv")
     else:
         taskresult.get_task_resultview_dataframe(task, "metadata_merged/", output_file)
 

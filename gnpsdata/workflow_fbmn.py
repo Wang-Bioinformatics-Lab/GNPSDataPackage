@@ -19,7 +19,7 @@ def get_graphml_network(task, gnps2=True):
 
 def get_quantification_dataframe(task, gnps2=True):
     if gnps2:
-        taskresult.get_gnps2_task_resultfile_dataframe(task, "nf_output/clustering/featuretable_reformated.csv")
+        taskresult.get_gnps2_task_resultfile_dataframe(task, "nf_output/clustering/featuretable_reformated.csv", sep=",")
     else:
         taskresult.get_task_resultview_dataframe(task, "quantification_table/", output_file)
 

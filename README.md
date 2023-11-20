@@ -14,3 +14,16 @@ Use the following command
 ```
 pip install git+https://github.com/Wang-Bioinformatics-Lab/GNPSDataPackage.git
 ```
+
+## Usage
+
+### FBMN
+
+How to get the quantification information
+
+```
+from gnpsdata import workflow_fbmn
+
+quant_df = workflow_fbmn.get_quantification_dataframe(task, gnps2=True)
+metadata_df = workflow_fbmn.get_metadata_dataframe(task, gnps2=True)
+```

@@ -35,7 +35,13 @@ def get_metadata_dataframe(task, gnps2=True):
     else:
         return taskresult.get_task_resultview_dataframe(task, "metadata_merged/", output_file)
 
+def get_library_match_dataframe(task, gnps2=True):
+    if gnps2:
+        return taskresult.get_gnps2_task_resultfile_dataframe(task, "nf_output/library/merged_results_with_gnps.tsv")
+    else:
+        view_name = "view_all_annotations_DB"
 
+        df = taskresult.get_task_resultview_dataframe(task, view_name)
 
 def download_metadata(task, output_file, gnps2=True):
     if gnps2:

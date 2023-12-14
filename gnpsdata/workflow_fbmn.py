@@ -17,6 +17,12 @@ def get_graphml_network(task, gnps2=True):
 
     return G
 
+def get_clustersumary_dataframe(task, gnps2=True):
+    if gnps2:
+        return taskresult.get_gnps2_task_resultfile_dataframe(task, "nf_output/networking/clustersummary_with_network.tsv")
+    else:
+        return taskresult.get_task_resultview_dataframe(task, "clusterinfo_summary/", "view_all_clustersummarygroup_attributes_withIDs_withcomponentID")
+
 def get_quantification_dataframe(task, gnps2=True):
     if gnps2:
         return taskresult.get_gnps2_task_resultfile_dataframe(task, "nf_output/clustering/featuretable_reformated.csv", delimiter=",")

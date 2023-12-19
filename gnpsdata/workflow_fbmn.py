@@ -17,7 +17,7 @@ def get_graphml_network(task, gnps2=True):
 
     return G
 
-def get_clustersumary_dataframe(task, gnps2=True):
+def get_clustersummary_dataframe(task, gnps2=True):
     if gnps2:
         return taskresult.get_gnps2_task_resultfile_dataframe(task, "nf_output/networking/clustersummary_with_network.tsv")
     else:

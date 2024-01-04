@@ -27,13 +27,13 @@ def get_quantification_dataframe(task, gnps2=True):
     if gnps2:
         return taskresult.get_gnps2_task_resultfile_dataframe(task, "nf_output/clustering/featuretable_reformated.csv", delimiter=",")
     else:
-        return taskresult.get_task_resultview_dataframe(task, "quantification_table/", output_file)
+        return taskresult.get_task_resultview_dataframe(task, "quantification_table_reformatted/", output_file)
 
 def download_quantification(task, output_file, gnps2=True):
     if gnps2:
         taskresult.download_gnps2_task_resultfile(task, "nf_output/clustering/featuretable_reformated.csv", output_file)
     else:
-        taskresult.download_task_resultfile(task, "quantification_table/", output_file)
+        taskresult.download_task_resultfile(task, "quantification_table_reformatted/", output_file)
 
 def get_metadata_dataframe(task, gnps2=True):
     if gnps2:

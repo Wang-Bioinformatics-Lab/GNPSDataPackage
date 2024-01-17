@@ -23,6 +23,11 @@ def download_mgf(task, output_file, gnps2=True):
     else:
         taskresult.download_task_resultfile(task, "spectra/specs_ms.mgf", output_file)
 
+def download_metadata(task, output_file, gnps2=True):
+    if gnps2:
+        taskresult.download_gnps2_task_resultfile(task, "nf_output/metadata/merged_metadata.tsv", output_file)
+    else:
+        taskresult.download_task_resultfile(task, "metadata_merged/", output_file)
 
 def get_clustersummary_dataframe(task, gnps2=True):
     if gnps2:
@@ -60,3 +65,10 @@ def get_usi_from_cluster(task, clusterindex, gnps2=True):
         usi = "mzspec:GNPS:TASK-{}-{}:scan:{}".format(task, "spectra/specs_ms.mgf", clusterindex)
 
     return usi
+
+def get_metadata_dataframe(task, gnps2=True):
+    if gnps2:
+        return taskresult.get_gnps2_task_resultfile_dataframe(task, "nf_output/metadata/merged_metadata.tsv")
+    else:
+        return taskresult.get_task_resultview_dataframe(task, "metadata_merged/", output_file)
+

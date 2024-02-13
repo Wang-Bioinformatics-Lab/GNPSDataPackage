@@ -68,14 +68,44 @@ def test_public_dataset():
 
     assert(len(all_files) > 15)
 
+def test_fasst_usi_search():
+    print("USI Search")
+
+    from gnpsdata import fasst
+    import requests
+
+    usi = "mzspec:MSV000083540:ccms_peak/Pooled_Urine_5_posneg_b.mzML:scan:5443"
+
+    results = fasst.query_fasst_usi(usi, "gnpsdata_index")
+    assert(len(results["results"]) > 1000)
+
+
+def test_fasst_peaks_search():
+    from gnpsdata import fasst
+    import requests
+
+    print("USI Search by Peaks")
+    # getting peaks
+    usi = "mzspec:MSV000083540:ccms_peak/Pooled_Urine_5_posneg_b.mzML:scan:5443"
+    json_spectrum = requests.get("https://metabolomics-usi.gnps2.org/json/?usi1={}".format(usi)).json()
+
+    #url = "http://localhost:5054/"
+    url = "https://fasst.gnps2.org/"
+
+    database = "gnpsdata_index"
+    
+    results = fasst.query_fasst_peaks(json_spectrum["precursor_mz"], json_spectrum["peaks"], database, serverurl=url)
+
+    assert(len(results["results"]) > 1000)
 
 def main():
     #test_massql_conversion()
     #test_classicnetworking_graphml()
     #test_dashboard()
     #test_gnps2_task_result()
-    test_public_dataset()
-
+    #test_public_dataset()
+    #test_fasst_usi_search()
+    test_fasst_peaks_search()
 
 if __name__ == "__main__": 
     main()

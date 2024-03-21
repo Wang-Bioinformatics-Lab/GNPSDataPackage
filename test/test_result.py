@@ -98,6 +98,13 @@ def test_fasst_peaks_search():
 
     assert(len(results["results"]) > 1000)
 
+def test_massive_dataset_list():
+    from gnpsdata import publicdata
+    
+    dataset_list = publicdata.get_massive_public_dataset_list()
+
+    print(dataset_list)
+
 def main():
     #test_massql_conversion()
     #test_classicnetworking_graphml()
@@ -105,7 +112,8 @@ def main():
     #test_gnps2_task_result()
     #test_public_dataset()
     #test_fasst_usi_search()
-    test_fasst_peaks_search()
+    #test_fasst_peaks_search()
+    test_massive_dataset_list()
 
 if __name__ == "__main__": 
     main()

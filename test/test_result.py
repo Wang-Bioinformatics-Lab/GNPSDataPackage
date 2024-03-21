@@ -103,7 +103,7 @@ def test_massive_dataset_list():
     
     dataset_list = publicdata.get_massive_public_dataset_list()
 
-    print(dataset_list)
+    assert(len(dataset_list) > 5000)
 
 def main():
     #test_massql_conversion()

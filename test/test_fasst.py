@@ -8,8 +8,8 @@ def test_fasst_usi_search():
 
     usi = "mzspec:GNPS:GNPS-LIBRARY:accession:CCMSLIB00005435899"
 
-    #host="https://fasst.gnps2.org/search"
-    host="http://169.235.26.140:5054/search"
+    host="https://fasst.gnps2.org/search"
+    #host="http://169.235.26.140:5054/search"
 
     results = fasst.query_fasst_usi(usi, "gnpsdata_index_11_25_23", host=host, analog=False, \
                     precursor_mz_tol=0.05, fragment_mz_tol=0.05, min_cos=0.7, cache="No")

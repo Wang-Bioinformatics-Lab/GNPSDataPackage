@@ -6,9 +6,10 @@ import requests_cache
 from tqdm import tqdm
 #requests_cache.install_cache('demo_cache')
 
-def query_fasst_usi(usi, database, analog=False, precursor_mz_tol=0.05, fragment_mz_tol=0.05, min_cos=0.7):
-    URL = "https://fasst.gnps2.org/search"
-
+def query_fasst_usi(usi, database, host="https://fasst.gnps2.org/search",
+                    analog=False, precursor_mz_tol=0.05,
+                    fragment_mz_tol=0.05, min_cos=0.7,
+                    cache="Yes"):
     params = {
         "usi": usi,
         "library": database,
@@ -16,9 +17,10 @@ def query_fasst_usi(usi, database, analog=False, precursor_mz_tol=0.05, fragment
         "pm_tolerance": precursor_mz_tol,
         "fragment_tolerance": fragment_mz_tol,
         "cosine_threshold": min_cos,
+        "cache": cache
     }
 
-    r = requests.get(URL, params=params, timeout=50)
+    r = requests.get(host, params=params, timeout=50)
     r.raise_for_status()
 
     return r.json()

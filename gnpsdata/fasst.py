@@ -2,9 +2,7 @@ import pandas as pd
 import argparse
 import json
 import requests
-import requests_cache
 from tqdm import tqdm
-#requests_cache.install_cache('demo_cache')
 
 def query_fasst_usi(usi, database, host="https://fasst.gnps2.org/search",
                     analog=False, precursor_mz_tol=0.05,

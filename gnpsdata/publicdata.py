@@ -40,11 +40,11 @@ def get_massive_private_dataset_filelist(accession, username, password):
     return files_list
 
 
-def get_massive_public_dataset_filelist(accession):
+def get_massive_public_dataset_filelist(accession, timeout=60):
     url = "https://massive.ucsd.edu/ProteoSAFe/dataset_files.jsp?accession={}".format(accession)
 
     # Get Data
-    r = requests.get(url)
+    r = requests.get(url, timeout=timeout)
 
     if r.status_code != 200:
         print(r.text)

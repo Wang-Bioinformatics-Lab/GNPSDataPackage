@@ -1,5 +1,6 @@
 import sys
 sys.path.insert(0, '..')
+sys.path.insert(0, '../modules/GNPSDataPackage/')
 
 def test_fasst_usi_search():
     print("USI Search")

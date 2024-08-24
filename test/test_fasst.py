@@ -18,6 +18,8 @@ def test_fasst_usi_search():
 
     assert(len(results["results"]) > 50)
 
+    # TODO: Testing the results to resolve the MS/MS on them
+
 def main():
     test_fasst_usi_search()
 

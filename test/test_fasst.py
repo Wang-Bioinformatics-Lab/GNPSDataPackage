@@ -21,7 +21,6 @@ def test_fasst_usi_search():
 
     # TODO: Testing the results to resolve the MS/MS on them
 
-
     print(results["results"][0])
 
 def test_fasst_usi_search_mtbls():
@@ -36,6 +35,8 @@ def test_fasst_usi_search_mtbls():
 
 
     assert(len(results["results"]) > 50)
+
+    print(results["results"][0])
 
 
 def test_libraries_list():

@@ -126,14 +126,25 @@ def download_gnps2_task_resultfile(task, result_path, output_file):
     return
 
 def get_gnps2_task_resultfile_dataframe(task, result_path, delimiter="\t"):
-    url = determine_gnps2_resultfile_url(task, result_path)
+    all_gnps2_servers = ["prod", "beta", "de"]
+    
+    for gnps2server in all_gnps2_servers:
+        url = determine_gnps2_resultfile_url(task, result_path, gnps2server=gnps2server)
 
-    df = pd.read_csv(url, sep=delimiter)
+        try:
+            df = pd.read_csv(url, sep=delimiter)
+            return df
+        except:
+            continue
 
-    return df
 
-def determine_gnps2_resultfile_url(task, result_path):
-    url = "https://gnps2.org/resultfile?task={}&file={}".format(task, quote(result_path))
+def determine_gnps2_resultfile_url(task, result_path, gnps2server="prod"):
+    if gnps2server == "prod":
+        url = "https://gnps2.org/resultfile?task={}&file={}".format(task, quote(result_path))
+    elif gnps2server == "beta":
+        url = "https://beta.gnps2.org/resultfile?task={}&file={}".format(task, quote(result_path))
+    elif gnps2server == "de":
+        url = "https://de.gnps2.org/resultfile?task={}&file={}".format(task, quote(result_path))
 
     return url
 

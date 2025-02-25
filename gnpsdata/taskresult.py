@@ -7,7 +7,7 @@ from urllib.parse import parse_qs
 from urllib.parse import quote
 
 def determine_resultfile_url_from_viewurl(view_url):
-    parsed_url = urlparse(url)
+    parsed_url = urlparse(view_url)
     task = parse_qs(parsed_url.query)['task'][0]
     view = parse_qs(parsed_url.query)['view'][0]
 
@@ -65,6 +65,19 @@ def determine_resultview_file_url(task, result_view_name):
 
     return url
 
+
+# Downloading GNPS1 full task zip
+def download_task_zip(task, output_file):
+    url = "https://gnps.ucsd.edu/ProteoSAFe/DownloadResult?task={}&view=download_cytoscape_data".format(task)
+
+    # have to do a post to get the download file
+    r = requests.post(url)
+    r.raise_for_status()
+
+    with open(output_file, 'wb') as f:
+        f.write(r.content)
+
+    return
 
 # This downloads a specific file from a task
 def download_task_resultfile(task, result_path, output_file):

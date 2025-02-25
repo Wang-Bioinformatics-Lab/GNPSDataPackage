@@ -105,6 +105,13 @@ def test_massive_dataset_list():
 
     assert(len(dataset_list) > 5000)
 
+def test_download_task_full_file():
+    task = "d2a3ea81f5c04066821d3178f364ed58"
+
+    from gnpsdata import taskresult
+
+    taskresult.download_task_zip(task, "data/task.zip")
+
 def main():
     #test_massql_conversion()
     #test_classicnetworking_graphml()
@@ -113,7 +120,8 @@ def main():
     #test_public_dataset()
     #test_fasst_usi_search()
     #test_fasst_peaks_search()
-    test_massive_dataset_list()
+    #test_massive_dataset_list()
+    test_download_task_full_file()
 
 if __name__ == "__main__": 
     main()

@@ -47,14 +47,14 @@ def query_fasst_api_usi(usi, database, host="https://api.fasst.gnps2.org",
 
     r.raise_for_status()
 
-    print(r.json())
+    print("MAKE REQUEST", r.json())
 
     task_id = r.json()["id"]
     
     # now we will wait and then get the results
     while True:
         time.sleep(1)
-        r = requests.post(os.path.join(host, "search/result/{}".format(task_id)), timeout=50)
+        r = requests.get(os.path.join(host, "search/result/{}".format(task_id)), timeout=50)
 
         r.raise_for_status()
 

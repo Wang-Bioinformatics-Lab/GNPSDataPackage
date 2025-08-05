@@ -52,6 +52,17 @@ def test_fasst_api_usi_search():
 
     assert(len(results["results"]) > 50)
 
+def test_fasst_api_search_load():
+    from gnpsdata import fasst
+
+    usi = "mzspec:GNPS:GNPS-LIBRARY:accession:CCMSLIB00005435899"
+
+    for i in range(0, 500):
+        results = fasst.query_fasst_api_usi(usi, "metabolomicspanrepo_index_nightly", host=FASST_API_SERVER_URL, analog=False, \
+                    precursor_mz_tol=0.05, fragment_mz_tol=0.05, min_cos=0.7, cache="No", blocking=False)
+
+
+
 def test_libraries_list():
     url = "{}/libraries".format(FASST_SERVER_URL)
 
@@ -65,7 +76,8 @@ def test_libraries_list():
 
 def main():
     #test_fasst_usi_search()
-    test_fasst_api_usi_search()
+    #test_fasst_api_usi_search()
+    test_fasst_api_search_load()
     #test_libraries_list()
 
 if __name__ == "__main__":

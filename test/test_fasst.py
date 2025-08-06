@@ -93,8 +93,8 @@ def test_libraries_list():
 def main():
     #test_fasst_usi_search()
     #test_fasst_api_usi_search()
-    #test_fasst_api_search_nonblocking()
-    test_fasst_api_peaks_search()
+    test_fasst_api_search_nonblocking()
+    #test_fasst_api_peaks_search()
     #test_libraries_list()
 
 if __name__ == "__main__":

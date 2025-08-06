@@ -31,24 +31,25 @@ def query_fasst_api_usi(usi, database, host="https://api.fasst.gnps2.org",
                     analog=False, precursor_mz_tol=0.05,
                     fragment_mz_tol=0.05, min_cos=0.7,
                     cache="Yes",
+                    lower_delta=100,
+                    upper_delta=100,
                     blocking=True):
+    
     params = {
-        "usi": usi,
         "library": database,
+        "usi": usi,
         "analog": "Yes" if analog else "No",
+        "cache": "No",
+        "lower_delta": lower_delta,
+        "upper_delta": upper_delta,
         "pm_tolerance": precursor_mz_tol,
         "fragment_tolerance": fragment_mz_tol,
-        "cosine_threshold": min_cos,
-        "cache": cache
+        "cosine_threshold": min_cos
     }
 
-    print(os.path.join(host, "search"))
 
-    r = requests.get(os.path.join(host, "search"), params=params, timeout=5)
-
+    r = requests.post(os.path.join(host, "search"), json=params, timeout=5)
     r.raise_for_status()
-
-    print("MAKE REQUEST", r.json())
 
     task_id = r.json()["id"]
     
@@ -77,9 +78,6 @@ def query_fasst_api_usi(usi, database, host="https://api.fasst.gnps2.org",
     
 
         return r.json()
-
-
-    return r.json()
 
 def query_fasst_peaks(precursor_mz, peaks, database, host="https://fasst.gnps2.org", analog=False, precursor_mz_tol=0.05, fragment_mz_tol=0.05, min_cos=0.7):
     spectrum_query = {
@@ -104,28 +102,36 @@ def query_fasst_peaks(precursor_mz, peaks, database, host="https://fasst.gnps2.o
 
 
 
-def query_fasst_api_peaks(precursor_mz, peaks, database, host="https://api.fasst.gnps2.org", 
-                          analog=False, precursor_mz_tol=0.05, fragment_mz_tol=0.05, min_cos=0.7, blocking=True):
+def query_fasst_api_peaks(precursor_mz, peaks, database, 
+                          host="https://api.fasst.gnps2.org", 
+                          analog=False, precursor_mz_tol=0.05, 
+                          fragment_mz_tol=0.05, 
+                          min_cos=0.7, 
+                          lower_delta=100,
+                          upper_delta=100,
+                          blocking=True):
     spectrum_query = {
         "peaks": peaks,
         "precursor_mz": precursor_mz
     }
 
     params = {
-        "query_spectrum": json.dumps(spectrum_query),
         "library": database,
+        "query_spectrum": json.dumps(spectrum_query),
         "analog": "Yes" if analog else "No",
+        "cache": "No",
+        "lower_delta": lower_delta,
+        "upper_delta": upper_delta,
         "pm_tolerance": precursor_mz_tol,
         "fragment_tolerance": fragment_mz_tol,
-        "cosine_threshold": min_cos,
+        "cosine_threshold": min_cos
     }
 
-    r = requests.post(os.path.join(host, "search"), data=params, timeout=5)
+    query_url = os.path.join(host, "search")
 
+    r = requests.post(query_url, json=params, timeout=5)
     
     r.raise_for_status()
-
-    print("MAKE REQUEST", r.json())
 
     task_id = r.json()["id"]
     
@@ -154,8 +160,6 @@ def query_fasst_api_peaks(precursor_mz, peaks, database, host="https://api.fasst
     
 
         return r.json()
-
-    return r.json()
 
 def get_databases(host="https://fasst.gnps2.org"):
     url = "{}/libraries".format(host)

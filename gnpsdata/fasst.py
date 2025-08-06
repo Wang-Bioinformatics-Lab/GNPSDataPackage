@@ -53,10 +53,10 @@ def query_fasst_api_usi(usi, database, host="https://api.fasst.gnps2.org",
 
     task_id = r.json()["id"]
     
-    if blocking is False:
-        params["task_id"] = task_id
-        params["status"] = "PENDING"
+    params["task_id"] = task_id
+    params["status"] = "PENDING"
 
+    if blocking is False:
         return params
     
     return blocking_for_results(params, host=host)
@@ -116,11 +116,11 @@ def query_fasst_api_peaks(precursor_mz, peaks, database,
     r.raise_for_status()
 
     task_id = r.json()["id"]
+
+    params["task_id"] = task_id
+    params["status"] = "PENDING"
     
     if blocking is False:
-        params["task_id"] = task_id
-        params["status"] = "PENDING"
-
         return params
     
     return blocking_for_results(params, host=host)

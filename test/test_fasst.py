@@ -29,6 +29,7 @@ def test_fasst_usi_search():
 
     assert(len(results["results"]) > 50)
 
+
     # TODO: Testing the results to resolve the MS/MS on them
 
     print(results["results"][0])
@@ -51,6 +52,13 @@ def test_fasst_api_usi_search():
                     precursor_mz_tol=0.05, fragment_mz_tol=0.05, min_cos=0.7, cache="No")
 
     assert(len(results["results"]) > 50)
+
+    usi = "mzspec:GNPS:GNPS-LIBRARY:accession:CCMSLIB00000078211"
+
+    results = fasst.query_fasst_usi(usi, "metabolomicspanrepo_index_latest", host=FASST_SERVER_URL, analog=False, \
+                    precursor_mz_tol=0.05, fragment_mz_tol=0.05, min_cos=0.7, cache="No")
+    
+    print(results)
 
 def test_fasst_api_peaks_search():
     print("Peaks Search API")
@@ -91,10 +99,10 @@ def test_throughput_api_search():
     usi = "mzspec:GNPS:GNPS-LIBRARY:accession:CCMSLIB00005464852"
 
     status_results_list = []
-    for i in range(0, 100):
+    for i in range(0, 5):
         print("submitted", i)
-        results = fasst.query_fasst_api_usi(usi, "metabolomicspanrepo_index_nightly", host=FASST_API_SERVER_URL, analog=True, \
-                    precursor_mz_tol=0.05, fragment_mz_tol=0.05, min_cos=0.7, cache="No", blocking=False)
+        results = fasst.query_fasst_api_usi(usi, "metabolomicspanrepo_index_nightly", host=FASST_API_SERVER_URL, analog=False, \
+                    precursor_mz_tol=0.05, fragment_mz_tol=0.05, min_cos=0.7, cache="Yes", blocking=False)
         
         status_results_list.append(results)
 
@@ -121,9 +129,9 @@ def test_libraries_list():
 
 def main():
     #test_fasst_usi_search()
-    #test_fasst_api_usi_search()
+    test_fasst_api_usi_search()
     #test_fasst_api_search_nonblocking()
-    test_throughput_api_search()
+    #test_throughput_api_search()
     #test_fasst_api_peaks_search()
     #test_libraries_list()
 

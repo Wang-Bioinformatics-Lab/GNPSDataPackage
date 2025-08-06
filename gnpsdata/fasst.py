@@ -129,7 +129,7 @@ def query_fasst_api_peaks(precursor_mz, peaks, database,
 def blocking_for_results(query_parameters_dictionary, host="https://api.fasst.gnps2.org"):
     task_id = query_parameters_dictionary["task_id"]
     
-    retries_max = 30
+    retries_max = 120
     current_retries = 0
     while True:
         print("WAITING FOR RESULTS", current_retries, task_id)

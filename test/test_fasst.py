@@ -73,9 +73,17 @@ def test_fasst_api_search_nonblocking():
 
     usi = "mzspec:GNPS:GNPS-LIBRARY:accession:CCMSLIB00005435899"
 
-    for i in range(0, 1000):
+    status_results_list = []
+    for i in range(0, 10):
+        print("submitted", i)
         results = fasst.query_fasst_api_usi(usi, "metabolomicspanrepo_index_nightly", host=FASST_API_SERVER_URL, analog=False, \
                     precursor_mz_tol=0.05, fragment_mz_tol=0.05, min_cos=0.7, cache="No", blocking=False)
+        
+        status_results_list.append(results)
+
+    # lets now wait for all the results to be ready
+    for status in status_results_list:
+        results = fasst.blocking_for_results(status)
 
 
 

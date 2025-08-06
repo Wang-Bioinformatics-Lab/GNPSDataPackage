@@ -59,28 +59,7 @@ def query_fasst_api_usi(usi, database, host="https://api.fasst.gnps2.org",
 
         return params
     
-    # now we will wait and then get the results
-    retries_max = 30
-    current_retries = 0
-    while True:
-        print("WAITING FOR RESULTS", current_retries, task_id)
-        
-        r = requests.get(os.path.join(host, "search/result/{}".format(task_id)), timeout=5)
-
-        r.raise_for_status()
-
-        # checking if the results are ready
-        if "status" in r.json() and r.json()["status"] == "PENDING":
-            time.sleep(1)
-            current_retries += 1
-
-            if current_retries >= retries_max:
-                raise Exception("Timeout waiting for results from FASST API")
-            
-            continue
-    
-
-        return r.json()
+    return blocking_for_results(params, host=host)
 
 def query_fasst_peaks(precursor_mz, peaks, database, host="https://fasst.gnps2.org", analog=False, precursor_mz_tol=0.05, fragment_mz_tol=0.05, min_cos=0.7):
     spectrum_query = {
@@ -144,13 +123,18 @@ def query_fasst_api_peaks(precursor_mz, peaks, database,
 
         return params
     
-    # now we will wait and then get the results
+    return blocking_for_results(params, host=host)
+
+
+def blocking_for_results(query_parameters_dictionary, host="https://api.fasst.gnps2.org"):
+    task_id = query_parameters_dictionary["task_id"]
+    
     retries_max = 30
     current_retries = 0
     while True:
         print("WAITING FOR RESULTS", current_retries, task_id)
         
-        r = requests.get(os.path.join(host, "search/result/{}".format(task_id)), timeout=5)
+        r = requests.get(os.path.join(host, "search/result/{}".format(task_id)), timeout=30)
 
         r.raise_for_status()
 
@@ -164,7 +148,6 @@ def query_fasst_api_peaks(precursor_mz, peaks, database,
             
             continue
     
-
         return r.json()
 
 def get_databases(host="https://fasst.gnps2.org"):

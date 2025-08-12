@@ -136,7 +136,14 @@ def blocking_for_results(query_parameters_dictionary, host="https://api.fasst.gn
         
         r = requests.get(os.path.join(host, "search/result/{}".format(task_id)), timeout=30)
 
-        r.raise_for_status()
+        try:
+            r.raise_for_status()
+        except:
+            time.sleep(1)
+            current_retries += 1
+
+            continue
+
 
         # checking if the results are ready
         if "status" in r.json() and r.json()["status"] == "PENDING":

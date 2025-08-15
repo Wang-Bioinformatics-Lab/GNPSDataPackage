@@ -58,8 +58,8 @@ def query_fasst_api_usi(usi, database, host="https://api.fasst.gnps2.org",
 
     if blocking is False:
         return params
-    
-    return blocking_for_results(params, host=host)
+
+    return get_results(params, host=host)
 
 def query_fasst_peaks(precursor_mz, peaks, database, host="https://fasst.gnps2.org", analog=False, precursor_mz_tol=0.05, fragment_mz_tol=0.05, min_cos=0.7):
     spectrum_query = {
@@ -122,11 +122,11 @@ def query_fasst_api_peaks(precursor_mz, peaks, database,
     
     if blocking is False:
         return params
-    
-    return blocking_for_results(params, host=host)
+
+    return get_results(params, host=host)
 
 
-def blocking_for_results(query_parameters_dictionary, host="https://api.fasst.gnps2.org"):
+def get_results(query_parameters_dictionary, host="https://api.fasst.gnps2.org", blocking=True):
     task_id = query_parameters_dictionary["task_id"]
     
     retries_max = 120
@@ -142,6 +142,10 @@ def blocking_for_results(query_parameters_dictionary, host="https://api.fasst.gn
             time.sleep(1)
             current_retries += 1
 
+            # if we are not blocking, we just return the status
+            if blocking is False:
+                return "PENDING"
+
             continue
 
 
@@ -149,6 +153,10 @@ def blocking_for_results(query_parameters_dictionary, host="https://api.fasst.gn
         if "status" in r.json() and r.json()["status"] == "PENDING":
             time.sleep(1)
             current_retries += 1
+
+            # if we are not blocking, we just return the status
+            if blocking is False:
+                return "PENDING"
 
             if current_retries >= retries_max:
                 raise Exception("Timeout waiting for results from FASST API")

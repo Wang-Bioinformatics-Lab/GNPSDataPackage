@@ -91,7 +91,7 @@ def test_fasst_api_search_nonblocking():
 
     # lets now wait for all the results to be ready
     for status in status_results_list:
-        results = fasst.blocking_for_results(status)
+        results = fasst.get_results(status)
 
 def test_throughput_api_search():
     from gnpsdata import fasst
@@ -99,7 +99,7 @@ def test_throughput_api_search():
     usi = "mzspec:GNPS:GNPS-LIBRARY:accession:CCMSLIB00005464852"
 
     status_results_list = []
-    for i in range(0, 5):
+    for i in range(0, 100):
         print("submitted", i)
         results = fasst.query_fasst_api_usi(usi, "metabolomicspanrepo_index_nightly", host=FASST_API_SERVER_URL, analog=False, \
                     precursor_mz_tol=0.05, fragment_mz_tol=0.05, min_cos=0.7, cache="Yes", blocking=False)
@@ -107,13 +107,48 @@ def test_throughput_api_search():
         status_results_list.append(results)
 
     # lets now wait for all the results to be ready
-    for status in status_results_list:
-        results = fasst.blocking_for_results(status)
+    while True:
+        all_results_finished = True
+        for status in status_results_list:
+            if status["status"] == "DONE" or status["status"] == "TIMEOUT":
+                continue
+            
+            # checking on the results
+            all_results_finished = False
+            try:
+                results = fasst.get_results(status, blocking=False)
+                if results == "PENDING":
+                    status["status"] = "PENDING"
+                    continue
+                else:
+                    status["status"] = "DONE"
+                    status["results"] = results["results"]
+            except:
+                status["status"] = "ERROR"
+                continue
 
-        try:
-            print("Total Analog Hits", len(results["results"]))
-        except KeyError:
-            print(results)
+        if all_results_finished:
+            break
+
+    
+    # summarizing the results
+    for status in status_results_list:
+        if status["status"] == "DONE":
+            print("Total Hits", len(status["results"]))
+        elif status["status"] == "PENDING":
+            print("Pending Results")
+        elif status["status"] == "ERROR":
+            print("Error in Results")
+        else:
+            print("Unknown Status", status["status"])
+
+    # for status in status_results_list:
+    #     results = fasst.blocking_for_results(status)
+
+    #     try:
+    #         print("Total Analog Hits", len(results["results"]))
+    #     except KeyError:
+    #         print(results)
 
 
 def test_libraries_list():
@@ -130,9 +165,9 @@ def test_libraries_list():
 def main():
     #test_fasst_usi_search()
     #test_fasst_api_usi_search()
-    test_fasst_api_peaks_search()
+    #test_fasst_api_peaks_search()
     #test_fasst_api_search_nonblocking()
-    #test_throughput_api_search()
+    test_throughput_api_search()
     
     #test_libraries_list()
 

@@ -1,5 +1,6 @@
 import sys
 import requests
+import time
 sys.path.insert(0, '..')
 sys.path.insert(0, '../modules/GNPSDataPackage/')
 
@@ -96,7 +97,8 @@ def test_fasst_api_search_nonblocking():
 def test_throughput_api_search():
     from gnpsdata import fasst
 
-    usi = "mzspec:GNPS:GNPS-LIBRARY:accession:CCMSLIB00005464852"
+    usi = "mzspec:GNPS:GNPS-LIBRARY:accession:CCMSLIB00005464852" # expensive query
+    #usi = "mzspec:GNPS:GNPS-LIBRARY:accession:CCMSLIB00005435899" # cheap query
 
     status_results_list = []
     for i in range(0, 100):
@@ -107,9 +109,10 @@ def test_throughput_api_search():
         status_results_list.append(results)
 
     # lets now wait for all the results to be ready
-    while True:
+    time.sleep(1)
+    for k in range(0, 60):
         all_results_finished = True
-        for status in status_results_list:
+        for i, status in enumerate(status_results_list):
             if status["status"] == "DONE" or status["status"] == "TIMEOUT":
                 continue
             
@@ -119,6 +122,7 @@ def test_throughput_api_search():
                 results = fasst.get_results(status, blocking=False)
                 if results == "PENDING":
                     status["status"] = "PENDING"
+                    print("Pending Results for", i)
                     continue
                 else:
                     status["status"] = "DONE"
@@ -129,8 +133,8 @@ def test_throughput_api_search():
 
         if all_results_finished:
             break
+        time.sleep(5)
 
-    
     # summarizing the results
     for status in status_results_list:
         if status["status"] == "DONE":

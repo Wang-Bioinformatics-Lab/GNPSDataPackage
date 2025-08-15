@@ -138,25 +138,28 @@ def get_results(query_parameters_dictionary, host="https://api.fasst.gnps2.org",
 
         try:
             r.raise_for_status()
+        except KeyboardInterrupt:
+            raise
         except:
-            time.sleep(1)
-            current_retries += 1
-
             # if we are not blocking, we just return the status
             if blocking is False:
                 return "PENDING"
+            
+            time.sleep(1)
+            current_retries += 1
+            
 
             continue
 
 
         # checking if the results are ready
         if "status" in r.json() and r.json()["status"] == "PENDING":
-            time.sleep(1)
-            current_retries += 1
-
             # if we are not blocking, we just return the status
             if blocking is False:
                 return "PENDING"
+            
+            time.sleep(1)
+            current_retries += 1
 
             if current_retries >= retries_max:
                 raise Exception("Timeout waiting for results from FASST API")

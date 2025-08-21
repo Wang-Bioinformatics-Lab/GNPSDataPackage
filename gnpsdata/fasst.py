@@ -165,8 +165,10 @@ def get_results(query_parameters_dictionary, host="https://api.fasst.gnps2.org",
                 raise Exception("Timeout waiting for results from FASST API")
             
             continue
+
+        results_dict = r.json()
     
-        return r.json()
+        return results_dict
 
 def get_databases(host="https://fasst.gnps2.org"):
     url = "{}/libraries".format(host)

@@ -16,7 +16,7 @@ def test_fasst_usi_search():
     usi = "mzspec:GNPS:GNPS-LIBRARY:accession:CCMSLIB00005435899"
 
     results = fasst.query_fasst_usi(usi, "metabolomicspanrepo_index_nightly", host=FASST_SERVER_URL, analog=False, \
-                    precursor_mz_tol=0.05, fragment_mz_tol=0.05, min_cos=0.7, cache="No")
+                    precursor_mz_tol=0.05, fragment_mz_tol=0.05, min_cos=0.7)
 
 
     assert(len(results["results"]) > 50)
@@ -25,7 +25,7 @@ def test_fasst_usi_search():
     usi = "mzspec:GNPS:GNPS-LIBRARY:accession:CCMSLIB00005435899"
 
     results = fasst.query_fasst_usi(usi, "metabolomicspanrepo_index_latest", host=FASST_SERVER_URL, analog=False, \
-                    precursor_mz_tol=0.05, fragment_mz_tol=0.05, min_cos=0.7, cache="No")
+                    precursor_mz_tol=0.05, fragment_mz_tol=0.05, min_cos=0.7)
 
 
     assert(len(results["results"]) > 50)
@@ -43,21 +43,21 @@ def test_fasst_api_usi_search():
     usi = "mzspec:GNPS:GNPS-LIBRARY:accession:CCMSLIB00005435899"
 
     results = fasst.query_fasst_api_usi(usi, "metabolomicspanrepo_index_nightly", host=FASST_API_SERVER_URL, analog=False, \
-                    precursor_mz_tol=0.05, fragment_mz_tol=0.05, min_cos=0.7, cache="No")
+                    precursor_mz_tol=0.05, fragment_mz_tol=0.05, min_cos=0.7)
 
     assert(len(results["results"]) > 50)
 
     usi = "mzspec:GNPS:GNPS-LIBRARY:accession:CCMSLIB00005435899"
 
     results = fasst.query_fasst_api_usi(usi, "metabolomicspanrepo_index_latest", host=FASST_API_SERVER_URL, analog=False, \
-                    precursor_mz_tol=0.05, fragment_mz_tol=0.05, min_cos=0.7, cache="No")
+                    precursor_mz_tol=0.05, fragment_mz_tol=0.05, min_cos=0.7)
 
     assert(len(results["results"]) > 50)
 
     usi = "mzspec:GNPS:GNPS-LIBRARY:accession:CCMSLIB00000078211"
 
     results = fasst.query_fasst_usi(usi, "metabolomicspanrepo_index_latest", host=FASST_SERVER_URL, analog=False, \
-                    precursor_mz_tol=0.05, fragment_mz_tol=0.05, min_cos=0.7, cache="No")
+                    precursor_mz_tol=0.05, fragment_mz_tol=0.05, min_cos=0.7)
     
     print(results)
 
@@ -86,7 +86,7 @@ def test_fasst_api_search_nonblocking():
     for i in range(0, 10):
         print("submitted", i)
         results = fasst.query_fasst_api_usi(usi, "metabolomicspanrepo_index_nightly", host=FASST_API_SERVER_URL, analog=False, \
-                    precursor_mz_tol=0.05, fragment_mz_tol=0.05, min_cos=0.7, cache="No", blocking=False)
+                    precursor_mz_tol=0.05, fragment_mz_tol=0.05, min_cos=0.7, blocking=False)
         
         status_results_list.append(results)
 
@@ -101,7 +101,7 @@ def test_throughput_api_search():
     #usi = "mzspec:GNPS:GNPS-LIBRARY:accession:CCMSLIB00005435899" # cheap query
 
     status_results_list = []
-    for i in range(0, 100):
+    for i in range(0, 20):
         print("submitted", i)
         results = fasst.query_fasst_api_usi(usi, "metabolomicspanrepo_index_nightly", host=FASST_API_SERVER_URL, analog=False, \
                     precursor_mz_tol=0.05, fragment_mz_tol=0.05, min_cos=0.7, cache="Yes", blocking=False)
@@ -154,6 +154,15 @@ def test_throughput_api_search():
     #     except KeyError:
     #         print(results)
 
+def test_big_analog_api_search():
+    from gnpsdata import fasst
+
+    usi = "mzspec:GNPS:MONA:accession:CCMSLIB00006685129"
+
+    results = fasst.query_fasst_api_usi(usi, "metabolomicspanrepo_index_nightly", host=FASST_API_SERVER_URL, analog=True, \
+                    precursor_mz_tol=0.1, fragment_mz_tol=0.1, min_cos=0.7)
+
+    print("Total Analog Hits", len(results["results"]))
 
 def test_libraries_list():
     url = "{}/libraries".format(FASST_SERVER_URL)
@@ -171,7 +180,8 @@ def main():
     #test_fasst_api_usi_search()
     #test_fasst_api_peaks_search()
     #test_fasst_api_search_nonblocking()
-    test_throughput_api_search()
+    #test_throughput_api_search()
+    test_big_analog_api_search()
     
     #test_libraries_list()
 

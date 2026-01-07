@@ -9,8 +9,7 @@ from tqdm import tqdm
 # this is sychronous low performance
 def query_fasst_usi(usi, database, host="https://fasst.gnps2.org",
                     analog=False, precursor_mz_tol=0.05,
-                    fragment_mz_tol=0.05, min_cos=0.7,
-                    cache="Yes"):
+                    fragment_mz_tol=0.05, min_cos=0.7):
     params = {
         "usi": usi,
         "library": database,
@@ -18,7 +17,7 @@ def query_fasst_usi(usi, database, host="https://fasst.gnps2.org",
         "pm_tolerance": precursor_mz_tol,
         "fragment_tolerance": fragment_mz_tol,
         "cosine_threshold": min_cos,
-        "cache": cache
+        "cache": "No"
     }
 
     r = requests.get(os.path.join(host, "search"), params=params, timeout=50)
@@ -30,7 +29,6 @@ def query_fasst_usi(usi, database, host="https://fasst.gnps2.org",
 def query_fasst_api_usi(usi, database, host="https://api.fasst.gnps2.org",
                     analog=False, precursor_mz_tol=0.05,
                     fragment_mz_tol=0.05, min_cos=0.7,
-                    cache="Yes",
                     lower_delta=100,
                     upper_delta=100,
                     blocking=True):
@@ -61,7 +59,9 @@ def query_fasst_api_usi(usi, database, host="https://api.fasst.gnps2.org",
 
     return get_results(params, host=host)
 
-def query_fasst_peaks(precursor_mz, peaks, database, host="https://fasst.gnps2.org", analog=False, precursor_mz_tol=0.05, fragment_mz_tol=0.05, min_cos=0.7):
+def query_fasst_peaks(precursor_mz, peaks, database, host="https://fasst.gnps2.org", \
+        analog=False, \
+        precursor_mz_tol=0.05, fragment_mz_tol=0.05, min_cos=0.7):
     spectrum_query = {
         "peaks": peaks,
         "precursor_mz": precursor_mz

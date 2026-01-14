@@ -182,6 +182,8 @@ def test_yasin_incomplete_api_search():
 
     assert ("MSV000095418" in results_df["Dataset"].values)
 
+    # Shoudl be more than 7K results
+    assert (len(results["results"]) > 7000)
 
 
 def test_libraries_list():

@@ -164,6 +164,26 @@ def test_big_analog_api_search():
 
     print("Total Analog Hits", len(results["results"]))
 
+def test_yasin_incomplete_api_search():
+    from gnpsdata import fasst
+
+    usi = "mzspec:GNPS:GNPS-LIBRARY:accession:CCMSLIB00003140022"
+
+    results = fasst.query_fasst_api_usi(usi, "metabolomicspanrepo_index_nightly", host=FASST_API_SERVER_URL, analog=False, \
+                    precursor_mz_tol=0.05, fragment_mz_tol=0.05, min_cos=0.7)
+
+    print("Total Hits", len(results["results"]))
+
+    # This USI should be in the results "mzspec:MSV000095418:peak/20240502_U19_ADRC_Main_SetOne_mzML/U19_ADRC_Main_mzML/P3_A12_6001897.mzML:scan:1356"
+    import pandas as pd
+    results_df = pd.DataFrame(results["results"])
+
+    assert ("mzspec:MSV000095418:peak/20240502_U19_ADRC_Main_SetOne_mzML/U19_ADRC_Main_mzML/P3_A12_6001897.mzML:scan:1356" in results_df["USI"].values)
+
+    assert ("MSV000095418" in results_df["Dataset"].values)
+
+
+
 def test_libraries_list():
     url = "{}/libraries".format(FASST_SERVER_URL)
 
@@ -181,7 +201,8 @@ def main():
     #test_fasst_api_peaks_search()
     #test_fasst_api_search_nonblocking()
     #test_throughput_api_search()
-    test_big_analog_api_search()
+    #test_big_analog_api_search()
+    test_yasin_incomplete_api_search()
     
     #test_libraries_list()
 

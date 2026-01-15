@@ -197,6 +197,17 @@ def test_libraries_list():
 
     assert(len(libraries) > 0)
 
+def debug_local():
+    usi = "mzspec:GNPS:GNPS-LIBRARY:accession:CCMSLIB00003140022"
+
+    from gnpsdata import fasst
+
+    results = fasst.query_fasst_api_usi(usi, "gnpslibrary", host="http://localhost:5055", analog=False, \
+                    precursor_mz_tol=0.05, fragment_mz_tol=0.05, min_cos=0.7)
+
+    
+
+
 def main():
     #test_fasst_usi_search()
     #test_fasst_api_usi_search()
@@ -204,9 +215,11 @@ def main():
     #test_fasst_api_search_nonblocking()
     #test_throughput_api_search()
     #test_big_analog_api_search()
-    test_yasin_incomplete_api_search()
+    #test_yasin_incomplete_api_search()
     
     #test_libraries_list()
+
+    debug_local()
 
 if __name__ == "__main__":
     main()

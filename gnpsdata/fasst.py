@@ -9,15 +9,18 @@ from tqdm import tqdm
 # this is sychronous low performance
 def query_fasst_usi(usi, database, host="https://fasst.gnps2.org",
                     analog=False, precursor_mz_tol=0.05,
-                    fragment_mz_tol=0.05, min_cos=0.7):
+                    fragment_mz_tol=0.05, min_cos=0.7,
+                    cache="Yes", lower_delta=130, upper_delta=200):
     params = {
         "usi": usi,
         "library": database,
         "analog": "Yes" if analog else "No",
+        "upper_delta": upper_delta,
+        "lower_delta": lower_delta,
         "pm_tolerance": precursor_mz_tol,
         "fragment_tolerance": fragment_mz_tol,
         "cosine_threshold": min_cos,
-        "cache": "No"
+        "cache": cache
     }
 
     r = requests.get(os.path.join(host, "search"), params=params, timeout=50)

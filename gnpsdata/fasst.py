@@ -10,7 +10,7 @@ from tqdm import tqdm
 def query_fasst_usi(usi, database, host="https://fasst.gnps2.org",
                     analog=False, precursor_mz_tol=0.05,
                     fragment_mz_tol=0.05, min_cos=0.7,
-                    cache="Yes", lower_delta=130, upper_delta=200):
+                    lower_delta=130, upper_delta=200):
     params = {
         "usi": usi,
         "library": database,

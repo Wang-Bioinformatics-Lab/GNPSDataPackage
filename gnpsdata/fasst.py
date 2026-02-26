@@ -20,7 +20,7 @@ def query_fasst_usi(usi, database, host="https://fasst.gnps2.org",
         "pm_tolerance": precursor_mz_tol,
         "fragment_tolerance": fragment_mz_tol,
         "cosine_threshold": min_cos,
-        "cache": cache
+        "cache": "No"
     }
 
     r = requests.get(os.path.join(host, "search"), params=params, timeout=50)

@@ -5,7 +5,7 @@ with open("README.md", "r", encoding="utf-8") as fh:
 
 setuptools.setup(
     name="gnpsdata",
-    version="0.0.5",
+    version="2026.03.18",
     author="Mingxun Wang",
     author_email="mwang87@gmail.com",
     description="GNPS Data API Access",

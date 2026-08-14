@@ -129,14 +129,16 @@ def query_fasst_api_peaks(precursor_mz, peaks, database,
     return get_results(params, host=host)
 
 
+IN_FLIGHT_STATUSES = {"PENDING", "RUNNING", "STARTED", "RETRY"}
+
 def get_results(query_parameters_dictionary, host="https://api.fasst.gnps2.org", blocking=True):
     task_id = query_parameters_dictionary["task_id"]
-    
+
     retries_max = 120
     current_retries = 0
     while True:
         print("WAITING FOR RESULTS", current_retries, task_id)
-        
+
         r = requests.get(os.path.join(host, "search/result/{}".format(task_id)), timeout=30)
 
         try:
@@ -147,31 +149,33 @@ def get_results(query_parameters_dictionary, host="https://api.fasst.gnps2.org",
             # if we are not blocking, we just return the status
             if blocking is False:
                 return "PENDING"
-            
+
             time.sleep(1)
             current_retries += 1
-            
+
 
             continue
 
+        response_json = r.json()
 
         # checking if the results are ready
-        if "status" in r.json() and r.json()["status"] == "PENDING":
+        if "status" in response_json and response_json["status"] in IN_FLIGHT_STATUSES:
             # if we are not blocking, we just return the status
             if blocking is False:
-                return "PENDING"
-            
+                return response_json["status"]
+
             time.sleep(1)
             current_retries += 1
 
             if current_retries >= retries_max:
                 raise Exception("Timeout waiting for results from FASST API")
-            
+
             continue
 
-        results_dict = r.json()
-    
-        return results_dict
+        if "results" not in response_json:
+            raise ValueError("Unexpected FASST API response, missing 'results' key: {}".format(response_json))
+
+        return response_json
 
 def get_databases(host="https://fasst.gnps2.org"):
     url = "{}/libraries".format(host)
